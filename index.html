@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BPE Visualizer</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <header>
+    <h1>BPE Visualizer</h1>
+    <p class="sub">Byte-Pair Encoding, step by step. Type a sentence and watch characters merge into tokens using the learned merge rules.</p>
+  </header>
+
+  <section class="card">
+    <label for="input">Sentence</label>
+    <input id="input" type="text" value="the lowest newest tokenizer is widely used" spellcheck="false" autocomplete="off">
+
+    <details>
+      <summary>Training settings</summary>
+      <div class="settings">
+        <label for="corpus">Training corpus <span class="hint">(the merge rules are learned from this text)</span></label>
+        <textarea id="corpus" rows="6" spellcheck="false"></textarea>
+        <label for="nmerges">Number of merges: <b id="nmergesVal">80</b></label>
+        <input id="nmerges" type="range" min="1" max="300" value="80">
+        <div id="trainStats" class="hint"></div>
+      </div>
+    </details>
+  </section>
+
+  <section class="card">
+    <div class="controls">
+      <button id="reset" title="Back to characters">⏮ Reset</button>
+      <button id="prev" title="Previous merge">◀ Prev</button>
+      <button id="play" class="primary">▶ Play</button>
+      <button id="next" title="Next merge">Next ▶</button>
+      <button id="end" title="Apply all merges">End ⏭</button>
+      <label class="speed">Speed
+        <input id="speed" type="range" min="1" max="10" value="5">
+      </label>
+    </div>
+    <input id="slider" type="range" min="0" max="0" value="0" aria-label="Merge step">
+    <div id="stepInfo" class="step-info"></div>
+    <div id="viz" class="viz" aria-live="polite"></div>
+    <div class="legend">
+      <span><i class="chip sample new"></i> just merged</span>
+      <span><i class="chip sample next"></i> about to merge</span>
+      <span><i class="chip sample"></i> token</span>
+      <span class="hint">▁ marks end of word</span>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Final tokens</h2>
+      <div id="final" class="final"></div>
+      <div id="metrics" class="metrics"></div>
+    </div>
+    <div class="card">
+      <h2>Merge rules used</h2>
+      <ol id="rules" class="rules"></ol>
+    </div>
+  </section>
+</main>
+<script src="bpe.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
